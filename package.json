@@ -1,0 +1,21 @@
+{
+  "name": "baileys-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "baileys-whatsapp-bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "zee",
+  "license": "ISC",
+  "dependencies": {
+    "@adiwajshing/baileys": "^5.0.0",
+    "@whiskeysockets/baileys": "^6.7.5",
+    "baileys": "github:WhiskeySockets/Baileys",
+    "qrcode-terminal": "^0.12.0",
+    "tiktok-scraper": "^1.4.36",
+    "yarn": "^1.22.22"
+  }
+}
