@@ -11,8 +11,8 @@
   "author": "zee",
   "license": "ISC",
   "dependencies": {
-    "@adiwajshing/baileys": "^5.0.0",
-    "@whiskeysockets/baileys": "^6.7.5",
+    "@adiwajshing/baileys": "^3.5.3",
+    "@whiskeysockets/baileys": "^6.7.8",
     "baileys": "github:WhiskeySockets/Baileys",
     "qrcode-terminal": "^0.12.0",
     "tiktok-scraper": "^1.4.36",

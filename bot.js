@@ -132,6 +132,19 @@ async function connectToWhatsApp() {
         // if (m.messages[0].key.fromMe) return; // Ignore messages from self   
 
         const message = m.messages[0].message;
+
+        // let textMessage;
+        // if (message.message?.conversation) {
+        //     textMessage = message.message.conversation;
+        // } else if (message.message?.extendedTextMessage?.text) {
+        //     textMessage = message.message.extendedTextMessage.text;
+        // } else {
+        //     console.log('Received message without text:', m.messages[0]);
+        //     return;
+        // }
+    
+        console.log(message);
+
         if (!message) {
             console.log('Received message without content:', m.messages[0]);
             return;
