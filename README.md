@@ -10,7 +10,7 @@ Welcome to the WhatsApp Bot project! To get started, follow the steps below:
 2. Then, after Installation, start the bot using this command:
    ```bash
    npm start
-# or
+## or
 You can do this command:
    ```bash
    node bot.js
