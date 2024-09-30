@@ -1,3 +1,5 @@
 .env
 node_modules/
 auth_info_baileys/
+
+*.exe

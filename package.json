@@ -14,6 +14,7 @@
     "@adiwajshing/baileys": "^3.5.3",
     "@whiskeysockets/baileys": "^6.7.8",
     "baileys": "github:WhiskeySockets/Baileys",
+    "dotenv": "^16.4.5",
     "qrcode-terminal": "^0.12.0",
     "tiktok-scraper": "^1.4.36",
     "yarn": "^1.22.22"

@@ -7,6 +7,7 @@ const path = require('path');
 const { handleDeepImageCommand } = require('./src/deep-img/deep-image');
 const { groupLeave } = require('./src/group-update/group-leave');
 const { groupJoin } = require('./src/group-update/group-join');
+const config = require('./config');
 
 // Path ke file JSON yang menyimpan data warn
 const warnFilePath = path.join(__dirname, '/database/counted-warn.json');
@@ -157,6 +158,7 @@ async function connectToWhatsApp() {
 
         // Determine if message is from a group or private chat
         const chat = m.messages[0].key.remoteJid;
+        console.log(chat)
         const isGroup = chat.endsWith('@g.us'); // Check if chat is a group
         const senderNumber = m.messages[0].key.participant || m.messages[0].key.remoteJid;
         const groupMetadata = await sock.groupMetadata(chat);
@@ -212,23 +214,30 @@ async function connectToWhatsApp() {
                 
                 try {
                     switch (command) {
-                        // case 'warn':
-                        //     if (senderIsAdmin) {
-                        //         const mentions = m.messages[0].message.extendedTextMessage?.contextInfo?.mentionedJid || [];
-                        //         if (mentions.length > 0) {
-                        //             const participantId = mentions[0];
-                        //             const groupMetadata = await sock.groupMetadata(chat);
-                        //             const groupSubjects = groupMetadata.subject;
-                        //             const groupSubject = groupSubjects.trim();
+                        case 'chatgpt' :
+                            if(args) {
+                                await sock.sendMessage(chat, { text : '_Kuota api anda sudah habis_'})
+                            } else {
+                                await sock.sendMessage(chat, { text : 'Mana promptnya?'})
+                            }
+                            break
+                        case 'warn':
+                            if (senderIsAdmin) {
+                                const mentions = m.messages[0].message.extendedTextMessage?.contextInfo?.mentionedJid || [];
+                                if (mentions.length > 0) {
+                                    const participantId = mentions[0];
+                                    const groupMetadata = await sock.groupMetadata(chat);
+                                    const groupSubjects = groupMetadata.subject;
+                                    const groupSubject = groupSubjects.trim();
                                 
-                        //             await addWarn(participantId, groupSubject, sock, chat);
-                        //         } else {
-                        //             await sock.sendMessage(chat, { text: 'Format perintah salah. Gunakan !warn @tag_peserta' });
-                        //         }
-                        //     } else {
-                        //         await sock.sendMessage(chat, { text: 'Hanya admin grup yang dapat menggunakan perintah ini.' });
-                        //     }
-                        //     break;
+                                    await addWarn(participantId, groupSubject, sock, chat);
+                                } else {
+                                    await sock.sendMessage(chat, { text: 'Format perintah salah. Gunakan !warn @tag_peserta' });
+                                }
+                            } else {
+                                await sock.sendMessage(chat, { text: 'Hanya admin grup yang dapat menggunakan perintah ini.' });
+                            }
+                            break;
                         case 'cekwarn':
                             if (senderIsAdmin) {
                                 const mentions = m.messages[0].message.extendedTextMessage?.contextInfo?.mentionedJid || [];
@@ -621,12 +630,12 @@ async function connectToWhatsApp() {
                                 try {
                                     const response = await axios.get('https://www.googleapis.com/customsearch/v1', {
                                         params: {
-                                            key: GOOGLE_API_KEY,
-                                            cx: SEARCH_ENGINE_ID,
-                                            q: args
+                                            key: config.GOOGLE_API_KEY,  // API Key dari .env
+                                            cx: config.CX,               // Search Engine ID dari .env
+                                            q: args               // Kata kunci pencarian
                                         }
                                     });
-
+                        
                                     const items = response.data.items;
                                     if (items && items.length > 0) {
                                         const topResult = items[0];
@@ -643,6 +652,7 @@ async function connectToWhatsApp() {
                                 await sock.sendMessage(chat, { text: 'Tolong berikan kata kunci untuk pencarian.' });
                             }
                             break;
+                        
                             case 'rem':
                                 if (isGroup && senderIsAdmin) {
                                     try {
